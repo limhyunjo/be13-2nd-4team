@@ -103,7 +103,9 @@ public class PostController {
         //게시글 작성할 보드 타입을 지정해야 함
 
         // 게시글이 notice인 경우 관리자인지 검증
+        if(postDto.getBoardType() == BoardType.NOTICE){
         adminService.validateAdmin( userDetails.getUser().getUsername());
+        }
 
         PostResponseDto postResponseDto = postService.createPost(postDto.getBoardType(), postDto, userDetails.getUser().getNo());
         return ResponseEntity.ok(postResponseDto);
@@ -120,7 +122,9 @@ public class PostController {
             @Valid @RequestBody PostDto postDto){
 
         // 게시글이 notice인 경우 관리자인지 검증
-        adminService.validateAdmin( userDetails.getUser().getUsername());
+        if(postDto.getBoardType() == BoardType.NOTICE){
+            adminService.validateAdmin( userDetails.getUser().getUsername());
+        }
         PostResponseDto updatePost = postService.updatePost(postNo, postDto);
         return ResponseEntity.ok(updatePost);
     }
